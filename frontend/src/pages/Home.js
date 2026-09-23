@@ -136,7 +136,7 @@ export default function Home() {
                     <div className="grid items-center gap-10 rounded-3xl border border-[#DBE7F3] bg-white p-8 shadow-xl shadow-[#123057]/5 sm:p-12 lg:grid-cols-[auto_1fr]">
                         <div className="mx-auto flex items-center justify-center rounded-3xl bg-white p-6 lg:mx-0">
                             <img
-                                src="/assets/logo-full.png"
+                                src="/assets/logo-trans.png"
                                 alt="Logo Yara Global Air — Climatisation, chauffage et réfrigération, certifié expert"
                                 className="w-56 max-w-full sm:w-64"
                             />

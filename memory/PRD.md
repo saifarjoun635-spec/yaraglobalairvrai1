@@ -73,6 +73,11 @@ Site web multi-pages en français pour Yara Global Air (climatisation, chauffage
 - Logo du menu agrandi d'environ 70 % (barre de menu élargie à 96/112 px en conséquence).
 - Bandeau « Une panne ? » : le courriel n'est plus forcé en majuscules (classe CSS uppercase retirée) — info@yaraglobalair.ca s'affiche en minuscules partout.
 
+## Révision 2026-09-23c
+- Nouveau logo à fond TRANSPARENT (logo-trans.png, marges rognées) partout : menu, pied de page, accueil, À propos, favicon. Plus aucun cadre blanc autour du logo du haut.
+- Logo du menu encore agrandi (108 px sur ordi, barre de menu à 128 px).
+- Logo du pied de page doublé (x2, 128 px) — sur sa carte blanche (le texte marine du logo serait illisible directement sur le fond marine).
+
 ## Backlog
 - P0 : Vérifier que la boîte info@yara.globalair.ca existe (le formulaire mailto affiche cette adresse mais envoie via le Gmail ; me dire pour inverser).
 - P0 : Remplacer les articles du blogue par du vrai contenu.

@@ -34,7 +34,7 @@ export default function APropos() {
                     <Reveal>
                         <div className="rounded-3xl border border-[#DBE7F3] bg-white p-8 shadow-xl shadow-[#123057]/5 sm:p-10">
                             <img
-                                src="/assets/logo-full.png"
+                                src="/assets/logo-trans.png"
                                 alt="Logo Yara Global Air"
                                 className="w-52 max-w-full sm:w-60"
                             />

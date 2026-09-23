@@ -8,11 +8,11 @@ export default function Footer() {
             <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                 <div className="space-y-5">
                     <div>
-                        <span className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-4">
+                        <span className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-5">
                             <img
-                                src="/assets/logo-full.png"
+                                src="/assets/logo-trans.png"
                                 alt="Yara Global Air — Climatisation, chauffage et réfrigération, certifié expert"
-                                className="h-16 w-auto object-contain"
+                                className="h-32 w-auto object-contain"
                             />
                         </span>
                     </div>

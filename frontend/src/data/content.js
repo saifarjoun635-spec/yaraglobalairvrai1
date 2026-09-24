@@ -60,7 +60,7 @@ export const SERVICES = [
             'Prévention des pannes inattendues',
         ],
         icon: 'shield',
-        image: '/assets/reparation.jpg',
+        image: '/assets/entretien-preventif.jpg',
     },
     {
         id: 'optimisation',
@@ -160,7 +160,7 @@ export const VISION_TEXT = {
     values: [
         {
             title: 'Professionnalisme et Qualité',
-            text: "Une maîtrise technique approfondie et l'utilisation d'équipements de pointe pour des installations durables.",
+            text: "Une maîtrise technique approfondie et l'utilisation d'équipements de pointe pour des résultats durables.",
             icon: 'award',
         },
         {

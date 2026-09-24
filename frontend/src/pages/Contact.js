@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal';
 import { COMPANY } from '../data/content';
 
 export default function Contact() {
-    const [form, setForm] = useState({ nom: '', tel: '', sujet: 'Entretien / nettoyage', message: '' });
+    const [form, setForm] = useState({ nom: '', tel: '', sujet: 'Nettoyage antibactérien', message: '' });
 
     const submit = (e) => {
         e.preventDefault();
@@ -196,10 +196,10 @@ export default function Contact() {
                                     onChange={(e) => setForm({ ...form, sujet: e.target.value })}
                                     className={inputCls}
                                 >
-                                    <option>Entretien / nettoyage</option>
-                                    <option>Inspection / diagnostic</option>
-                                    <option>Réparation / dépannage</option>
-                                    <option>Fluides frigorigènes</option>
+                                    <option>Nettoyage antibactérien</option>
+                                    <option>Inspection technique</option>
+                                    <option>Entretien préventif</option>
+                                    <option>Optimisation</option>
                                     <option>Autre demande</option>
                                 </select>
                                 <textarea

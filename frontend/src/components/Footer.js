@@ -17,8 +17,8 @@ export default function Footer() {
                         </span>
                     </div>
                     <p className="max-w-xs text-sm leading-relaxed text-slate-300">
-                        Climatisation, chauffage, réfrigération et ventilation. Nettoyage, diagnostic, réparation et
-                        gestion écoresponsable des fluides frigorigènes — au service du résidentiel.
+                        Climatisation, chauffage, réfrigération et ventilation. Nettoyage antibactérien, inspection,
+                        entretien préventif et optimisation — au service du résidentiel.
                     </p>
                     <a
                         href={COMPANY.facebook}

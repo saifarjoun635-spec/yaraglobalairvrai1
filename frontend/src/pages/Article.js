@@ -63,7 +63,7 @@ export default function Article() {
                             Besoin d'un expert pour votre système ?
                         </h2>
                         <p className="mx-auto mt-3 max-w-md text-sm text-slate-500">
-                            Diagnostic, entretien ou réparation — parlez directement à un technicien certifié.
+                            Nettoyage, inspection, entretien ou optimisation — parlez directement à un technicien certifié.
                         </p>
                         <div className="mt-7 flex flex-wrap justify-center gap-4">
                             <a

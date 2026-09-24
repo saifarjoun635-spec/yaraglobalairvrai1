@@ -6,6 +6,7 @@ import {
     BadgeCheck,
     Gauge,
     Leaf,
+    ScanSearch,
     MapPin,
     Phone,
     ShieldCheck,
@@ -19,7 +20,7 @@ import Reveal from '../components/Reveal';
 import EditorialMarquee from '../components/EditorialMarquee';
 import { ABOUT_TEXT, ARTICLES, COMPANY, SERVICES } from '../data/content';
 
-const ICONS = { sparkles: Sparkles, gauge: Gauge, wrench: Wrench, leaf: Leaf };
+const ICONS = { sparkles: Sparkles, gauge: Gauge, wrench: Wrench, leaf: Leaf, search: ScanSearch, shield: ShieldCheck };
 
 export default function Home() {
     const { scrollY } = useScroll();
@@ -70,7 +71,7 @@ export default function Home() {
                         transition={{ duration: 0.8, delay: 0.9 }}
                         className="mt-8 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg"
                     >
-                        Nettoyage approfondi, diagnostic technique et réparation de thermopompes et systèmes CVC-R.
+                        Nettoyage antibactérien, inspection technique, entretien préventif et optimisation de thermopompes et systèmes CVC-R.
                         Service certifié, humain et de proximité — {COMPANY.region}.
                     </motion.p>
 
@@ -106,7 +107,7 @@ export default function Home() {
                     >
                         {[
                             { icon: BadgeCheck, label: 'Techniciens certifiés' },
-                            { icon: ShieldCheck, label: 'Fluides gérés écoresponsablement' },
+                            { icon: ShieldCheck, label: 'Entretien préventif' },
                             { icon: MapPin, label: 'Drummondville · Victoriaville · Centre-du-Québec' },
                         ].map((b) => (
                             <span key={b.label} className="flex items-center gap-2 text-sm text-slate-600">

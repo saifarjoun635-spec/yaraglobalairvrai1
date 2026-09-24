@@ -1,10 +1,10 @@
-import { CheckCircle2, Gauge, Leaf, Phone, Sparkles, Wrench } from 'lucide-react';
+import { CheckCircle2, Gauge, Leaf, Phone, ScanSearch, ShieldCheck, Sparkles, Wrench } from 'lucide-react';
 import MaskedLines from '../components/MaskedLines';
 import Reveal from '../components/Reveal';
 import SavingsCalculator from '../components/SavingsCalculator';
 import { COMPANY, SERVICES } from '../data/content';
 
-const ICONS = { sparkles: Sparkles, gauge: Gauge, wrench: Wrench, leaf: Leaf };
+const ICONS = { sparkles: Sparkles, gauge: Gauge, wrench: Wrench, leaf: Leaf, search: ScanSearch, shield: ShieldCheck };
 
 export default function Services() {
     return (
@@ -22,10 +22,10 @@ export default function Services() {
                             lines={[
                                 <>L'expertise CVC-R,</>,
                                 <>
-                                    <span className="text-[#1B76C9]">de l'inspection</span>
+                                    <span className="text-[#1B76C9]">du nettoyage</span>
                                 </>,
                                 <>
-                                    à la <span className="italic text-[#E07F1F]">réparation.</span>
+                                    à l'<span className="italic text-[#E07F1F]">optimisation.</span>
                                 </>,
                             ]}
                         />

@@ -180,3 +180,29 @@ export const VISION_TEXT = {
         },
     ],
 };
+
+// Avis Google réels (source : fiche Google de Yara Global Air). Ajouter les nouveaux avis ici.
+export const REVIEWS_GOOGLE = {
+    rating: '5,0',
+    count: 7,
+    url: 'https://www.google.com/search?q=Yara+Global+Air+avis',
+};
+
+export const REVIEWS = [
+    {
+        name: 'Kate B.',
+        text: "Service impeccable du début à la fin! Une équipe professionnelle, courtoise et à l'écoute. Le travail a été réalisé avec soin et efficacité, et le résultat est vraiment à la hauteur de mes attentes. Je recommande sans hésiter!",
+    },
+    {
+        name: 'Sandra M.',
+        text: 'Ponctualité, propreté et professionnalisme. Nettoyage de ma thermopompe fait avec un service de qualité. M. répond à mes questions et me donne des conseils. Je recommande!',
+    },
+    {
+        name: 'Walter A.',
+        text: 'Excellente job, ponctuel le travail est super propre professionnel je le recommande fortement',
+    },
+    {
+        name: 'Phil A.',
+        text: 'Excellent service professionnel et rapide',
+    },
+];

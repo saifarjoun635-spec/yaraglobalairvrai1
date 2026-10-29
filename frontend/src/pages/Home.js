@@ -11,6 +11,7 @@ import {
     Phone,
     ShieldCheck,
     Sparkles,
+    Star,
     Wind,
     Wrench,
 } from 'lucide-react';
@@ -18,7 +19,7 @@ import AirflowCanvas from '../components/AirflowCanvas';
 import MaskedLines from '../components/MaskedLines';
 import Reveal from '../components/Reveal';
 import EditorialMarquee from '../components/EditorialMarquee';
-import { ABOUT_TEXT, ARTICLES, COMPANY, SERVICES } from '../data/content';
+import { ABOUT_TEXT, ARTICLES, COMPANY, REVIEWS, REVIEWS_GOOGLE, SERVICES } from '../data/content';
 
 const ICONS = { sparkles: Sparkles, gauge: Gauge, wrench: Wrench, leaf: Leaf, search: ScanSearch, shield: ShieldCheck };
 
@@ -261,6 +262,70 @@ export default function Home() {
                     </div>
                 </Reveal>
             </section>
+
+            {/* ---------- AVIS GOOGLE ---------- */}
+            {REVIEWS.length > 0 && (
+                <section data-testid="home-reviews" className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+                    <Reveal className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <p className="font-tech text-xs uppercase tracking-[0.3em] text-[#1B76C9]">Avis clients</p>
+                            <h2 className="font-display mt-4 max-w-xl text-3xl font-extrabold tracking-tight text-[#123057] sm:text-4xl">
+                                Ce que nos clients disent de nous.
+                            </h2>
+                            <div className="mt-4 flex items-center gap-3 text-sm text-slate-600">
+                                <span className="flex gap-0.5" aria-hidden="true">
+                                    {[0, 1, 2, 3, 4].map((i) => (
+                                        <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                                    ))}
+                                </span>
+                                <span>
+                                    <b className="text-[#123057]">{REVIEWS_GOOGLE.rating}</b> sur Google ·{' '}
+                                    {REVIEWS_GOOGLE.count} avis
+                                </span>
+                            </div>
+                        </div>
+                        <a
+                            href={REVIEWS_GOOGLE.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            data-testid="home-reviews-link"
+                            className="group flex items-center gap-2 text-sm font-semibold text-[#1B76C9] transition-colors duration-300 hover:text-[#123057]"
+                        >
+                            Voir tous les avis sur Google
+                            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        </a>
+                    </Reveal>
+                    <div className="grid gap-5 md:grid-cols-2">
+                        {REVIEWS.map((r, i) => (
+                            <Reveal key={r.name} delay={i * 0.08}>
+                                <figure className="card-glow flex h-full flex-col justify-between rounded-3xl border border-[#DBE7F3] bg-white p-7 shadow-sm">
+                                    <div>
+                                        <span className="flex gap-0.5" aria-label="5 étoiles sur 5">
+                                            {[0, 1, 2, 3, 4].map((k) => (
+                                                <Star key={k} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                                            ))}
+                                        </span>
+                                        <blockquote className="mt-4 text-[15px] leading-relaxed text-slate-600">
+                                            « {r.text} »
+                                        </blockquote>
+                                    </div>
+                                    <figcaption className="mt-6 flex items-center gap-3">
+                                        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1B76C9]/10 font-display text-sm font-bold text-[#1B76C9]">
+                                            {r.name.charAt(0)}
+                                        </span>
+                                        <span>
+                                            <span className="block font-display text-sm font-bold text-[#123057]">
+                                                {r.name}
+                                            </span>
+                                            <span className="block text-xs text-slate-400">Avis Google</span>
+                                        </span>
+                                    </figcaption>
+                                </figure>
+                            </Reveal>
+                        ))}
+                    </div>
+                </section>
+            )}
 
             {/* ---------- BLOG TEASER ---------- */}
             <section className="border-y border-[#DBE7F3] bg-[#EAF2FA]">

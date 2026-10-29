@@ -1,19 +1,49 @@
 import { useState } from 'react';
-import { Clock, Facebook, Mail, MapPin, MessageSquare, Phone, Send } from 'lucide-react';
+import { CheckCircle2, Clock, Facebook, Loader2, Mail, MapPin, MessageSquare, Phone, Send } from 'lucide-react';
 import MaskedLines from '../components/MaskedLines';
 import Reveal from '../components/Reveal';
 import { COMPANY } from '../data/content';
 
 export default function Contact() {
-    const [form, setForm] = useState({ nom: '', tel: '', sujet: 'Nettoyage antibactérien', message: '' });
+    const [form, setForm] = useState({
+        nom: '',
+        tel: '',
+        ville: '',
+        nombre: '1',
+        typeUnite: 'Murale',
+        sujet: 'Nettoyage antibactérien',
+        message: '',
+        piege: '',
+    });
+    const [status, setStatus] = useState('idle'); // idle | sending | sent | error
 
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
-        const subject = encodeURIComponent(`[Site web] ${form.sujet} — ${form.nom}`);
-        const body = encodeURIComponent(
-            `Nom : ${form.nom}\nTéléphone : ${form.tel}\nSujet : ${form.sujet}\n\n${form.message}`
-        );
-        window.location.href = `${COMPANY.emailHref}?subject=${subject}&body=${body}`;
+        if (form.piege) return; // champ invisible rempli = robot
+        setStatus('sending');
+        try {
+            const res = await fetch(`https://formsubmit.co/ajax/${COMPANY.email}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                    _subject: `[Site web] ${form.sujet} — ${form.nom} (${form.ville})`,
+                    _template: 'table',
+                    _captcha: 'false',
+                    Nom: form.nom,
+                    Téléphone: form.tel,
+                    'Ville / secteur': form.ville,
+                    'Nombre de thermopompes': form.nombre,
+                    "Type d'unité": form.typeUnite,
+                    Service: form.sujet,
+                    Message: form.message || '—',
+                }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || 'Envoi refusé');
+            setStatus('sent');
+        } catch (err) {
+            setStatus('error');
+        }
     };
 
     const inputCls =
@@ -160,7 +190,7 @@ export default function Contact() {
                             </div>
                         </div>
 
-                        {/* Right : mailto form */}
+                        {/* Right : quote form (FormSubmit → info@) */}
                         <div className="bg-white p-8 sm:p-12">
                             <p className="font-tech text-xs uppercase tracking-[0.3em] text-[#1B76C9]">
                                 Soumission rapide
@@ -169,57 +199,153 @@ export default function Contact() {
                                 Racontez-nous votre besoin.
                             </h2>
                             <p className="mt-3 text-sm leading-relaxed text-slate-500">
-                                Ce formulaire ouvre votre application courriel avec votre message déjà rédigé — rien
-                                n'est enregistré sur nos serveurs.
+                                Remplissez le formulaire : votre demande nous est transmise directement et on vous
+                                rappelle pour confirmer votre rendez-vous.
                             </p>
+                            {status === 'sent' ? (
+                                <div
+                                    data-testid="contact-form-success"
+                                    role="status"
+                                    className="mt-8 flex flex-col items-center rounded-3xl border border-emerald-200 bg-emerald-50 px-6 py-12 text-center"
+                                >
+                                    <CheckCircle2 className="h-12 w-12 text-emerald-500" strokeWidth={1.6} />
+                                    <p className="font-display mt-5 text-2xl font-bold text-[#123057]">Demande reçue!</p>
+                                    <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate-600">
+                                        On vous rappelle pour confirmer votre rendez-vous.
+                                    </p>
+                                </div>
+                            ) : (
                             <form onSubmit={submit} data-testid="contact-form" className="mt-8 grid gap-4">
+                                <input
+                                    type="text"
+                                    name="_honey"
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    aria-hidden="true"
+                                    value={form.piege}
+                                    onChange={(e) => setForm({ ...form, piege: e.target.value })}
+                                    className="hidden"
+                                />
                                 <div className="grid gap-4 sm:grid-cols-2">
                                     <input
                                         required
                                         data-testid="contact-form-name"
-                                        placeholder="Votre nom"
+                                        placeholder="Votre nom *"
+                                        autoComplete="name"
                                         value={form.nom}
                                         onChange={(e) => setForm({ ...form, nom: e.target.value })}
                                         className={inputCls}
                                     />
                                     <input
+                                        required
+                                        type="tel"
+                                        inputMode="tel"
+                                        autoComplete="tel"
+                                        pattern="[0-9 ()+.\-]{10,}"
+                                        title="Entrez un numéro de téléphone valide (10 chiffres)"
                                         data-testid="contact-form-phone"
-                                        placeholder="Votre téléphone (optionnel)"
+                                        placeholder="Votre téléphone *"
                                         value={form.tel}
                                         onChange={(e) => setForm({ ...form, tel: e.target.value })}
                                         className={inputCls}
                                     />
                                 </div>
-                                <select
-                                    data-testid="contact-form-subject"
-                                    value={form.sujet}
-                                    onChange={(e) => setForm({ ...form, sujet: e.target.value })}
-                                    className={inputCls}
-                                >
-                                    <option>Nettoyage antibactérien</option>
-                                    <option>Inspection technique</option>
-                                    <option>Entretien préventif</option>
-                                    <option>Optimisation</option>
-                                    <option>Autre demande</option>
-                                </select>
-                                <textarea
+                                <input
                                     required
-                                    rows={5}
+                                    data-testid="contact-form-city"
+                                    placeholder="Ville / secteur * (ex. Drummondville)"
+                                    autoComplete="address-level2"
+                                    value={form.ville}
+                                    onChange={(e) => setForm({ ...form, ville: e.target.value })}
+                                    className={inputCls}
+                                />
+                                <div className="grid gap-4 sm:grid-cols-2">
+                                    <label className="grid gap-1.5 text-xs font-semibold text-slate-500">
+                                        Nombre de thermopompes
+                                        <select
+                                            data-testid="contact-form-count"
+                                            value={form.nombre}
+                                            onChange={(e) => setForm({ ...form, nombre: e.target.value })}
+                                            className={inputCls}
+                                        >
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4 ou plus</option>
+                                        </select>
+                                    </label>
+                                    <label className="grid gap-1.5 text-xs font-semibold text-slate-500">
+                                        Type d'unité
+                                        <select
+                                            data-testid="contact-form-unit"
+                                            value={form.typeUnite}
+                                            onChange={(e) => setForm({ ...form, typeUnite: e.target.value })}
+                                            className={inputCls}
+                                        >
+                                            <option>Murale</option>
+                                            <option>Centrale</option>
+                                            <option>Les deux</option>
+                                            <option>Je ne sais pas</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <label className="grid gap-1.5 text-xs font-semibold text-slate-500">
+                                    Service souhaité
+                                    <select
+                                        data-testid="contact-form-subject"
+                                        value={form.sujet}
+                                        onChange={(e) => setForm({ ...form, sujet: e.target.value })}
+                                        className={inputCls}
+                                    >
+                                        <option>Nettoyage antibactérien</option>
+                                        <option>Inspection technique</option>
+                                        <option>Entretien préventif</option>
+                                        <option>Optimisation</option>
+                                        <option>Autre demande</option>
+                                    </select>
+                                </label>
+                                <textarea
+                                    rows={4}
                                     data-testid="contact-form-message"
-                                    placeholder="Décrivez votre besoin : type d'équipement, problème observé, disponibilités…"
+                                    placeholder="Précisions (optionnel) : problème observé, disponibilités…"
                                     value={form.message}
                                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                                     className={`${inputCls} resize-none`}
                                 />
+                                {status === 'error' && (
+                                    <p
+                                        data-testid="contact-form-error"
+                                        role="alert"
+                                        className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                                    >
+                                        L'envoi n'a pas fonctionné. Réessayez, ou appelez-nous directement au{' '}
+                                        <a href={COMPANY.phoneHref} className="font-bold underline">
+                                            {COMPANY.phoneDisplay}
+                                        </a>
+                                        .
+                                    </p>
+                                )}
                                 <button
                                     type="submit"
+                                    disabled={status === 'sending'}
                                     data-testid="contact-form-submit"
-                                    className="group flex items-center justify-center gap-3 rounded-full bg-amber-500 px-8 py-4 font-display text-sm font-bold uppercase tracking-wide text-[#123057] transition-[background-color,transform] duration-300 hover:scale-[1.02] hover:bg-amber-400"
+                                    className="group flex items-center justify-center gap-3 rounded-full bg-amber-500 px-8 py-4 font-display text-sm font-bold uppercase tracking-wide text-[#123057] transition-[background-color,transform] duration-300 hover:scale-[1.02] hover:bg-amber-400 disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
                                 >
-                                    Envoyer par courriel
-                                    <Send className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-1" />
+                                    {status === 'sending' ? (
+                                        <>
+                                            Envoi en cours
+                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                        </>
+                                    ) : (
+                                        <>
+                                            Envoyer ma demande
+                                            <Send className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-1" />
+                                        </>
+                                    )}
                                 </button>
+                                <p className="text-center text-xs text-slate-400">* Champs obligatoires</p>
                             </form>
+                            )}
                         </div>
                     </div>
                 </Reveal>

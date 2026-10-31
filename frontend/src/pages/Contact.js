@@ -4,6 +4,9 @@ import MaskedLines from '../components/MaskedLines';
 import Reveal from '../components/Reveal';
 import { COMPANY } from '../data/content';
 
+// Clé Web3Forms liée à info@yaraglobalair.ca (clé publique, prévue pour être dans le code du site)
+const WEB3FORMS_KEY = 'e315b430-d88a-4b7f-8ca8-7ba3e411ad36';
+
 export default function Contact() {
     const [form, setForm] = useState({
         nom: '',
@@ -22,13 +25,13 @@ export default function Contact() {
         if (form.piege) return; // champ invisible rempli = robot
         setStatus('sending');
         try {
-            const res = await fetch(`https://formsubmit.co/ajax/${COMPANY.email}`, {
+            const res = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
-                    _subject: `[Site web] ${form.sujet} — ${form.nom} (${form.ville})`,
-                    _template: 'table',
-                    _captcha: 'false',
+                    access_key: WEB3FORMS_KEY,
+                    subject: `[Site web] ${form.sujet} — ${form.nom} (${form.ville})`,
+                    from_name: 'Site web Yara Global Air',
                     Nom: form.nom,
                     Téléphone: form.tel,
                     'Ville / secteur': form.ville,
@@ -190,7 +193,7 @@ export default function Contact() {
                             </div>
                         </div>
 
-                        {/* Right : quote form (FormSubmit → info@) */}
+                        {/* Right : quote form (Web3Forms → info@) */}
                         <div className="bg-white p-8 sm:p-12">
                             <p className="font-tech text-xs uppercase tracking-[0.3em] text-[#1B76C9]">
                                 Soumission rapide

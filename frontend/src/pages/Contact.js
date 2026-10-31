@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal';
 import { COMPANY } from '../data/content';
 
 // Clé Web3Forms liée à info@yaraglobalair.ca (clé publique, prévue pour être dans le code du site)
-const WEB3FORMS_KEY = 'e315b430-d88a-4b7f-8ca8-7ba3e411ad36';
+const WEB3FORMS_KEY = '953fbfb4-3297-4e33-89f7-73de33026b69';
 
 export default function Contact() {
     const [form, setForm] = useState({
